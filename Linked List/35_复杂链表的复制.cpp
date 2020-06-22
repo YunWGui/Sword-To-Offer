@@ -28,57 +28,57 @@ public:
     ListNode *copyRandomList(ListNode *head) {
         CloneNodes( head );
         ConnectSiblingNodes( head );
-        
+
         return ReconnectNodes( head );
     }
-    
+
     void CloneNodes(ListNode* head) {
         ListNode* pNode = head;
-        
+
         while ( pNode ) {
             ListNode* pCloned = new ListNode(0);
             // 复制节点
             pCloned->val = pNode->val;
             pCloned->next = pNode->next;
             pCloned->random = nullptr;
-            
+
             // 将复制的节点链接在原节点后面
             pNode->next = pCloned;
             pNode = pCloned->next;
         }
     }
-    
+
     void ConnectSiblingNodes(ListNode* head) {
         ListNode* pNode = head;
-        
+
         while ( pNode ) {
             ListNode* pCloned = pNode->next;  // pCloned 是 pNode 的下一个节点
-            
+
             if ( pNode->random ) {
                 pCloned->random = pNode->random->next;
             }
             pNode = pCloned->next;
         }
     }
-    
+
     ListNode* ReconnectNodes(ListNode* head) {
         ListNode* pNode = head;
         ListNode* pClonedHead = nullptr;
         ListNode* pClonedNode = nullptr;
-        
+
         if ( pNode ) {
             pClonedHead = pClonedNode = pNode->next;
             pNode->next = pClonedNode->next;
-            pNode = pNode->next;  // 原节点从 A -> B 
+            pNode = pNode->next;  // 原节点从 A -> B
         }
         while ( pNode ) {
             pClonedNode->next = pNode->next;
             pClonedNode = pClonedNode->next;
-            
+
             pNode->next = pClonedNode->next;
             pNode = pNode->next;
         }
-        
+
         return pClonedHead;
     }
 };
@@ -86,7 +86,7 @@ public:
 
 int main()
 {
-    
+
 
     return 0;
 }
